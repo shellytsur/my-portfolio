@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clinic System for Prenatal Care — Shelly Tsur Ackerman</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; -webkit-font-smoothing: antialiased; letter-spacing: 0.01em; }
+::selection { background: oklch(0.24 0.17 264); color: #FDFBF6; }
+html, body { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='21' height='26' viewBox='0 0 21 26'><path d='M4.4,3.3 L4.4,22 L9.35,17.6 L12.1,23.65 L14.85,22.33 L12.1,16.5 L18.7,16.5 Z' fill='white' stroke='%23001a91' stroke-width='1.7' stroke-linejoin='round'/></svg>") 4 3, auto; }
+a, [style*="cursor:pointer"] { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='21' height='26' viewBox='0 0 17 21' fill='none'><path d='M4.25199 7.7718L4.25199 2.30779C4.24462 2.10594 4.27802 1.90467 4.35018 1.71601C4.42235 1.52735 4.5318 1.35517 4.672 1.20976C4.8122 1.06435 4.98027 0.948687 5.16617 0.86969C5.35208 0.790692 5.552 0.749977 5.75399 0.749977C5.95598 0.749977 6.1559 0.790692 6.3418 0.86969C6.5277 0.948687 6.69578 1.06435 6.83598 1.20976C6.97618 1.35517 7.08563 1.52735 7.15779 1.71601C7.22996 1.90467 7.26335 2.10594 7.25599 2.30779L7.25599 8.8178M4.25199 7.7718L4.25199 12.3348M4.25199 7.7718L1.65799 10.5318C0.0859877 12.3988 0.911988 13.7608 1.49199 14.5168L3.10699 16.9548C4.33199 19.0218 5.74999 19.8028 6.94199 19.8028L11.822 19.8028C14.089 19.8028 16.202 17.4208 16.202 15.2368L16.25 10.0368C16.2547 9.54903 16.0812 9.07631 15.7621 8.70734C15.4431 8.33838 15.0003 8.09853 14.517 8.03279L12.977 7.84279M7.25599 5.81379L8.30999 5.8408C8.64802 5.84951 8.97833 5.94379 9.27003 6.11483C9.56173 6.28586 9.80531 6.52806 9.97799 6.81879M9.97799 6.81879C10.156 7.11879 10.259 7.4688 10.259 7.8438L10.259 8.8478M9.97799 6.81879L11.313 6.87279C11.8352 6.88585 12.3316 7.10273 12.696 7.47704C13.0604 7.85136 13.2639 8.35339 13.263 8.87579L13.263 9.87979' fill='white' stroke='%23001a91' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") 7 1, pointer; }
+* { box-sizing: border-box; }
+::-webkit-scrollbar { width: 22px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: oklch(0.24 0.17 264); border-radius: 10px; border: 8px solid transparent; background-clip: padding-box; }
+a { color: inherit; }
+a:hover { color: oklch(0.24 0.17 264); }
+@media (max-width: 640px) {
+  #scroll-container{scrollbar-width:none;-ms-overflow-style:none;}
+  #scroll-container::-webkit-scrollbar{display:none;width:0;}
+  #page-bg { background: #FFFFFF !important; }
+  .page-frame { border: none !important; inset: 0 !important; border-radius: 0 !important; background: #FFFFFF !important; }
+  .hero-frame { background: #FFFFFF !important; }
+  .project-nav-footer { background:#FFFFFF !important; backdrop-filter:none !important; }
+  header, section { padding-left: 20px !important; padding-right: 20px !important; }
+  .hero-gallery-wrap, .project-roles { order: 0 !important; }
+  .hero-gallery { max-width: none !important; width: calc(100% + 40px) !important; margin: 0 -20px !important; cursor: default !important; }
+  .hero-frame {
+    border: none !important;
+    border-radius: 14px !important;
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding: 18px 14px !important;
+    scroll-padding-left: 14px !important;
+    scroll-padding-right: 14px !important;
+    gap: 10px !important;
+    aspect-ratio: unset !important;
+  }
+  .hero-frame::-webkit-scrollbar { display: none; height: 0; }
+  .hero-frame .hero-slide {
+    display: block !important;
+    flex: 0 0 94.3% !important;
+    width: 94.3% !important;
+    height: auto !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+    border-radius: 14px !important;
+    box-shadow: 0 3px 8px oklch(0.24 0.17 264 / 0.18) !important;
+  }
+  .hero-dots-pill { display: none !important; }
+  #gallery-hint { display: none !important; }
+  header { padding: 20px 20px 20px !important; background: linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.6)) !important; }
+  .header-logo { width: 26.18px !important; height: 34.6px !important; }
+  .header-brand-text { display: none !important; }
+  .header-dots { display: none !important; }
+  .mobile-projects-label { display: flex !important; }
+  .project-nav { display: none !important; }
+  .mobile-hire-btn { display: inline-block !important; margin-inline-start: auto !important; position: relative !important; top: 3px !important; }
+  .project-nav-footer { display: flex !important; }
+  #scroll-container { padding-bottom: 70px !important; margin-top: 10px !important; }
+  .roles-heading { font-size: 19px !important; margin: 0 0 8px !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="page-transition-overlay" style="position:fixed; inset:0; background:#FFFFFF; z-index:9998; pointer-events:none; display:none; clip-path:inset(0 0 100% 0);"></div>
+<script>
+(function () {
+  var overlay = document.getElementById('page-transition-overlay');
+  var hasTransition = sessionStorage.getItem('pageTransition');
+  if (!hasTransition || !window.matchMedia('(max-width: 640px)').matches) return;
+  sessionStorage.removeItem('pageTransition');
+  overlay.style.clipPath = 'inset(0 0 0% 0)';
+  overlay.style.display = 'block';
+  window.addEventListener('DOMContentLoaded', function () {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        overlay.style.transition = 'clip-path 0.6s cubic-bezier(.65,0,.35,1)';
+        overlay.style.clipPath = 'inset(100% 0 0% 0)';
+        setTimeout(function () { overlay.style.display = 'none'; }, 620);
+      });
+    });
+  });
+})();
+</script>
+
+<div dir="ltr" id="page-bg" style="position:fixed; inset:0; background: #FDFBF6; font-family: 'Lato', sans-serif;">
+
+  <div class="page-frame" style="position:absolute; inset: calc(clamp(12px,3.12vw,31px) + 12px); border: 2px solid oklch(0.24 0.17 264); border-radius: clamp(16px,2.2vw,26px); overflow:hidden; background: #FDFBF6; display:flex; flex-direction:column;">
+
+    <div class="header-dots" style="position:absolute; top:18px; left:22px; display:flex; gap:7px; z-index:6;">
+      <span style="width:13px; height:13px; border-radius:50%; background:oklch(0.24 0.17 264);"></span>
+      <span style="width:13px; height:13px; border-radius:50%; background:oklch(0.24 0.17 264);"></span>
+      <span style="width:13px; height:13px; border-radius:50%; background:oklch(0.24 0.17 264);"></span>
+    </div>
+
+    <header style="flex:none; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; padding: clamp(30px,5.5vw,80px) clamp(30px,5.5vw,80px) 36px; backdrop-filter: blur(8px); background: linear-gradient(rgba(253,251,246,0.92), rgba(253,251,246,0.6));">
+        <div style="display:flex; align-items:center; gap:12px;">
+        <a href="index.html" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+          <svg class="header-logo" width="30.8" height="40.7" viewBox="0 0 518 691" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex: none; height: 40.7px">
+<path d="M305.013 18.0581C313.998 19.7966 320.433 26.5436 329.778 27.3321C361.903 30.0441 372.963 -0.920926 381.368 0.0210741C407.075 2.8989 439.918 32.3244 462.368 45.1356C471.323 50.2526 500.423 65.2096 506.108 70.8706C507.253 76.0046 508.258 200.692 507.673 202.999C502.147 224.704 436.889 246.782 419.423 256.841C414.211 259.84 403.56 269.781 397.638 266.534C388.632 261.6 358.643 251.289 355.628 239.934C347.653 239.099 335.388 243.399 331.938 251.253C344.873 255.121 357.008 263.98 368.813 270.415C407.683 291.606 450.973 311.551 486.328 337.695C518.39 361.394 528.84 446.525 504.108 481.343L504.908 477.448C500.37 487.521 484.815 538.473 471.333 538.648C417.836 611.205 332.299 646.02 255.808 689.333C249.875 692.688 180.612 682.753 170.157 682.253C163.117 681.918 142.282 681.033 134.084 679.058C102.553 661.675 69.6275 644.791 39.3714 625.328C30.3269 619.513 7.68885 609.123 1.15735 601.943C-1.21381 572.042 0.767172 541.135 0.925353 511.153C0.956353 505.263 1.20435 488.908 2.50435 483.688C15.1703 471.805 35.4005 464.786 50.4379 456.563C66.5697 447.468 82.8535 433.696 100.817 428.393C119.917 435.29 135.478 450.098 154.096 458.083C162.347 455.248 175.969 448.818 181.374 441.973C129.13 410.532 23.0185 381.62 5.31386 316.71C-16.4314 237.435 39.5785 150.631 98.2643 102.684C114.094 89.7496 117.778 86.9886 136.851 97.6771C182.287 119.493 194.005 27.8706 230.678 54.4106C266.302 78.5352 278.699 24.7226 305.013 18.0581Z" fill="oklch(0.24 0.17 264)"></path>
+<path d="M439.513 116.107C462.135 118.381 471.944 104.373 489.923 96.8242C489.411 128.829 494.427 164.106 489.308 195.827C467.848 213.633 433.951 230.095 408.348 241.289C380.369 179.22 280.628 247.56 266.353 290.306C246.431 349.943 309.888 335.964 343.308 333.682C387.777 330.654 464.369 319.821 488.763 370.137C526.321 447.605 458.814 544.708 396.773 587.733C357.916 613.059 315.976 634.193 275.708 657.248C234.839 680.768 191.772 662.453 146.053 661.988C143.994 631.112 144.179 598.491 145.932 567.593C160.228 554.268 203.837 527.074 221.778 525.763C241.101 590.388 329.703 548.078 364.143 520.628C385.008 503.998 424.659 451.08 386.063 431.768C370.608 423.873 351.033 429.908 335.173 430.938C275.762 434.809 173.513 459.761 164.788 372.916C157.452 299.911 204.99 247.408 235.799 185.652C240.365 178.712 249.903 188.788 255.548 190.152C277.14 195.371 300.182 179.938 313.393 164.355C316.79 159.763 328.378 139.482 333.778 139.853C341.108 140.358 337.788 146.846 349.673 147.667C379.003 149.69 403.986 136.721 418.223 109.625C425.618 108.877 432.42 113.706 439.513 116.107Z" fill="#F5F4F2"></path>
+</svg>
+          <div class="header-brand-text">
+            <span style="font-family: 'Lato',sans-serif; font-weight: 700; font-size: 16px; color: oklch(0.24 0.17 264)"><span style="font-weight: normal;">Shelly Tsur Ackerman</span></span>
+            <div style="font-size:14px; color:oklch(0.55 0.02 264);">Product Designer</div>
+          </div>
+        </a>
+        <div class="mobile-projects-label" style="display:none; align-items:center; gap:12px;">
+          <span style="width:1.5px; height:24px; background:oklch(0.32 0.19 264 / 0.3); margin:0 3px;"></span>
+          <span style="font-family:'Lato',sans-serif; font-weight:700; font-size:14px; letter-spacing:0.16em; text-transform:uppercase; color:oklch(0.24 0.17 264);">Project 1</span>
+        </div>
+        </div>
+        <div class="project-nav" style="display:flex; align-items:center; gap:14px; font-size:14px; color:oklch(0.42 0.03 264);">
+          <a href="project-5.html" aria-label="Previous project" style="text-decoration:none; color:oklch(0.24 0.17 264); font-weight:700;">←</a>
+          <span><strong style="color:oklch(0.24 0.17 264);">1</strong> / 5</span>
+          <span style="color:oklch(0.42 0.03 264);">Projects</span>
+          <a href="project-2.html" aria-label="Next project" style="text-decoration:none; color:oklch(0.24 0.17 264); font-weight:700;">→</a>
+        </div>
+        <a href="mailto:shelly.tsur@gmail.com?subject=Hi%20Shelly%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20talk" class="mobile-hire-btn" aria-label="Hire Me" style="display:none; text-decoration:none; line-height:0;"><svg width="67" height="38" viewBox="0 0 88 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M75.4785 2.07582C76.7389 2.22715 77.9854 2.32731 79.2091 2.61147C84.1097 3.74941 85.5889 7.20734 85.9896 10.7344C86.7135 17.3355 86.8721 16.512 86.4638 23.1288L86.3174 25.5686C86.1908 28.0609 86.0864 30.9616 83.863 32.9737C81.5707 35.0475 79.6296 35.6275 76.3265 36.1429C75.7817 36.2279 75.1121 36.337 74.5609 36.3726C75.0474 37.5993 75.6126 38.8074 76.2547 39.9914C77.3997 42.1328 78.6211 44.256 79.6051 46.4509C79.8185 47.0198 80.9903 49.0268 79.1332 48.6533C78.6106 48.5487 77.2848 47.5272 76.8252 47.2009C72.8543 44.382 70.9108 41.0623 66.752 38.4473C65.6741 37.7693 25.9045 36.926 25.1503 36.9256C21.6056 37.1482 18.4748 36.9342 14.1046 36.5062C9.33144 36.0388 6.03014 33.8115 3.95873 29.2765C1.21629 23.2725 -1.21697 8.56021 3.89587 4.80442C6.73408 2.68873 10.5998 1.98033 14.419 1.38147C22.0622 0.446943 56.8645 1.44687 75.4785 2.07582Z" fill="white"></path><path d="M20.2106 0.00701187C23.9847 -0.0209386 44.5849 0.0367697 49.4566 0.142754C59.2013 0.354747 70.058 0.761775 77.6217 1.07635C77.6566 1.0778 77.6917 1.08103 77.7262 1.08611C78.6868 1.22808 79.8085 1.34151 80.8863 1.64959C83.1398 2.29372 84.641 3.61682 85.6022 5.27557C86.4267 6.69868 86.8375 8.33925 87.0406 9.9533L87.1158 10.6428V10.6457C87.406 13.9032 87.5913 15.4058 87.6568 16.881C87.7236 18.3825 87.669 19.8785 87.5035 23.1789L87.3854 25.6174C87.3349 26.8416 87.2863 28.2708 87.0084 29.6486C86.7274 31.0418 86.1989 32.4582 85.1363 33.6418C84.0464 34.8555 82.6021 35.5918 81.15 36.089C79.7022 36.5847 78.1574 36.8709 76.8336 37.1252C76.7446 37.1423 76.6461 37.1591 76.5426 37.1789C76.7279 37.6962 76.9226 38.2106 77.1315 38.7199L77.5016 39.5881L77.5035 39.5929C78.4191 41.7007 79.4345 43.8759 80.2477 46.1086C80.2538 46.1253 80.2591 46.1423 80.2643 46.1594C80.3052 46.2935 80.3597 46.4152 80.4791 46.7629C80.5738 47.0386 80.6887 47.4073 80.7379 47.7717C80.7781 48.0694 80.8258 48.691 80.4147 49.1857C79.9191 49.7815 79.1829 49.7477 78.6842 49.6242C78.3817 49.5493 78.1017 49.3648 77.9352 49.2492C77.7327 49.1087 77.5201 48.9394 77.3258 48.7765C76.9532 48.4643 76.537 48.0816 76.3912 47.9543C74.7632 46.5317 73.1341 44.9764 71.5221 43.4806C69.9401 42.0128 68.3614 40.5913 66.7525 39.3361C66.7136 39.3279 66.6623 39.3158 66.5963 39.3049C66.3671 39.2668 66.035 39.225 65.6031 39.1818C64.743 39.0958 63.5484 39.009 62.1236 38.9221C59.2774 38.7483 55.5523 38.5795 51.8287 38.4318C48.1066 38.2841 44.3915 38.1572 41.569 38.0676C40.1581 38.0227 22.9705 37.9875 22.1168 37.9631C21.6898 37.9509 21.3467 37.9411 21.1012 37.9347C20.9784 37.9316 20.8805 37.9295 20.8092 37.9279C20.7741 37.9271 20.7462 37.9263 20.7252 37.926C17.761 38.1509 15.145 37.9266 11.5992 37.4992C9.49017 37.245 7.65582 36.5027 6.11974 35.173C4.59289 33.8513 3.42065 32.001 2.53868 29.6242C1.38242 26.5083 0.316789 21.2262 0.0591902 16.2492C-0.0698244 13.7563 0.000744253 11.2938 0.383409 9.18963C0.759206 7.12345 1.4652 5.23166 2.74864 4.06756L2.98985 3.85369C5.50476 1.68873 8.80692 0.974328 11.7848 0.39959L11.8258 0.392754C13.4598 0.146885 16.4614 0.0347823 20.2106 0.00701187ZM20.2252 2.00701C16.4701 2.03483 13.6173 2.14781 12.1412 2.36736C9.01824 2.9707 6.16549 3.64715 4.10118 5.54119L4.09532 5.54607C3.30553 6.26033 2.70279 7.61399 2.35118 9.54705C2.00592 11.4453 1.93179 13.7407 2.05626 16.1457C2.30567 20.9647 3.34195 26.0408 4.41368 28.9289C5.21456 31.087 6.22502 32.6178 7.42931 33.6603C8.62436 34.6948 10.0699 35.2996 11.8385 35.5129C15.3757 35.9393 17.8388 36.1436 20.6158 35.9289L20.693 35.926C21.0232 35.9262 44.4638 36.1374 51.9078 36.4328C55.6353 36.5807 59.3778 36.7499 62.2457 36.925C63.6779 37.0124 64.9023 37.1027 65.8014 37.1926C66.2488 37.2373 66.6315 37.2835 66.9244 37.3322C67.0693 37.3563 67.2111 37.384 67.3356 37.4172C67.4083 37.4365 67.6478 37.4975 67.8531 37.6564L68.4986 38.1652C69.9977 39.3699 71.456 40.6914 72.8824 42.0148C74.5233 43.5373 76.1096 45.0511 77.7076 46.4474C77.9095 46.6238 78.1773 46.8712 78.4899 47.1388C78.4812 47.1151 78.4731 47.0912 78.4645 47.0676C78.4334 46.9825 78.398 46.8832 78.3688 46.7931L78.066 45.9875C77.3413 44.1164 76.4953 42.293 75.6686 40.3898C75.134 39.1761 74.6635 37.9364 74.2584 36.6789C74.1648 36.388 74.2095 36.0706 74.3795 35.8166C74.5495 35.5626 74.8259 35.3995 75.1305 35.3752C75.5097 35.345 75.9888 35.25 76.4557 35.1603C77.8152 34.8992 79.2132 34.638 80.5025 34.1965C81.7877 33.7564 82.8757 33.1658 83.6481 32.3058C84.3919 31.4773 84.8088 30.4363 85.0475 29.2531C85.2886 28.0576 85.3351 26.7937 85.3873 25.5275V25.5197L85.5065 23.0803V23.0783C85.6727 19.7621 85.7206 18.3611 85.6588 16.9699C85.5958 15.5526 85.4215 14.1664 85.1236 10.8234C84.9669 9.12825 84.6062 7.54634 83.8717 6.2785C83.1553 5.04206 82.0643 4.06627 80.3365 3.57244C79.4438 3.31727 78.557 3.22828 77.4977 3.07342C69.9409 2.75929 59.1213 2.35297 49.4137 2.14178C44.5505 2.03598 23.9715 1.97927 20.2252 2.00701Z" fill="#010066"></path><path d="M68.5232 13.2615L68.4142 19.2422L68.7375 19.2481C68.8546 19.2502 68.9462 19.2378 69.0123 19.2109C69.0832 19.1794 69.1547 19.1174 69.2266 19.025L71.0591 16.8439C71.1358 16.7469 71.2192 16.6734 71.3092 16.6235C71.4038 16.5737 71.5237 16.5501 71.669 16.5527L73.2573 16.5817L70.9666 19.2184C70.8034 19.4264 70.6271 19.5848 70.4377 19.6939C70.5348 19.7659 70.62 19.8495 70.6932 19.9446C70.7712 20.0397 70.8443 20.1418 70.9126 20.2509L73.2523 23.7945L71.6851 23.766C71.5492 23.7635 71.4325 23.7403 71.3349 23.6963C71.2373 23.6477 71.1568 23.5642 71.0934 23.4459L69.3019 20.6785C69.2383 20.5695 69.1717 20.498 69.102 20.4639C69.0323 20.4298 68.9272 20.4115 68.7866 20.409L68.3931 20.4018L68.3329 23.7049L66.597 23.6732L66.7874 13.2299L68.5232 13.2615Z" fill="#010066"></path><path d="M64.6362 13.1906L64.4458 23.6339L62.7099 23.6023L62.9003 13.159L64.6362 13.1906Z" fill="#010066"></path><path d="M58.9948 20.4553C58.493 20.4695 58.0705 20.5064 57.7273 20.5657C57.3842 20.6204 57.1087 20.695 56.9007 20.7897C56.6928 20.8843 56.5431 20.9964 56.4517 21.126C56.3603 21.2555 56.3132 21.3976 56.3103 21.5522C56.3048 21.8568 56.3898 22.0763 56.5655 22.2107C56.7458 22.3452 56.9812 22.4151 57.2717 22.4204C57.6278 22.4269 57.9358 22.3692 58.1958 22.2474C58.4606 22.121 58.7195 21.9289 58.9726 21.6711L58.9948 20.4553ZM55.074 17.2554C55.9172 16.5115 56.922 16.1502 58.0886 16.1714C58.5103 16.1791 58.8862 16.2563 59.2163 16.4029C59.5465 16.5448 59.8241 16.7421 60.0491 16.9946C60.2742 17.2424 60.4423 17.5384 60.5532 17.8825C60.6687 18.2268 60.7228 18.6027 60.7154 19.0103L60.6324 23.5643L59.8452 23.55C59.6813 23.547 59.5552 23.5212 59.467 23.4728C59.3789 23.4196 59.3105 23.3176 59.2617 23.1667L59.1166 22.6439C58.9309 22.8045 58.7502 22.9465 58.5745 23.0698C58.3989 23.1885 58.2167 23.2883 58.0277 23.3692C57.8388 23.4501 57.6362 23.5097 57.4199 23.5479C57.2082 23.5909 56.9735 23.6101 56.7158 23.6054C56.4113 23.5998 56.1309 23.5549 55.8747 23.4705C55.6185 23.3815 55.3982 23.2533 55.2138 23.0859C55.0294 22.9185 54.8879 22.712 54.7892 22.4665C54.6906 22.221 54.6442 21.9366 54.6501 21.6134C54.6534 21.4306 54.6872 21.2508 54.7513 21.0739C54.8156 20.8923 54.9171 20.7207 55.056 20.5592C55.1995 20.3978 55.3827 20.2465 55.6056 20.1052C55.8284 19.964 56.1001 19.8424 56.4207 19.7405C56.746 19.6386 57.1223 19.5588 57.5499 19.5009C57.9775 19.4384 58.4656 19.4051 59.014 19.4011L59.0217 18.9794C59.0305 18.4968 58.9339 18.1389 58.7319 17.9055C58.5301 17.6675 58.2347 17.545 57.8458 17.5379C57.5647 17.5328 57.3298 17.5613 57.1412 17.6235C56.9573 17.6857 56.7943 17.7577 56.6522 17.8395C56.5102 17.9166 56.38 17.9869 56.2617 18.0503C56.1481 18.1139 56.021 18.1444 55.8804 18.1418C55.7586 18.1396 55.6561 18.1072 55.5729 18.0448C55.4897 17.9777 55.4231 17.9015 55.3731 17.8162L55.074 17.2554Z" fill="#010066"></path><path d="M51.8797 23.5174C51.2519 23.506 50.7725 23.3215 50.4416 22.9639C50.1154 22.6018 49.958 22.1092 49.9694 21.486L50.0428 17.4591L49.3049 17.4456C49.2112 17.4439 49.1321 17.412 49.0676 17.3499C49.0031 17.2878 48.972 17.1959 48.9742 17.074L48.9867 16.3853L50.1498 16.2167L50.5511 14.2556C50.5762 14.1623 50.6221 14.0905 50.6886 14.0402C50.7551 13.9898 50.8399 13.9656 50.943 13.9675L51.8426 13.9839L51.8012 16.2538L53.7268 16.289L53.7043 17.5258L51.7786 17.4907L51.7074 21.3982C51.7033 21.6231 51.754 21.7998 51.8594 21.9282C51.9696 22.0568 52.1207 22.1228 52.3128 22.1263C52.4205 22.1283 52.5098 22.1182 52.5805 22.096C52.656 22.0693 52.7197 22.0423 52.7718 22.0152C52.8285 21.9881 52.8782 21.9632 52.9208 21.9406C52.9634 21.9132 53.0059 21.8999 53.048 21.9007C53.0996 21.9016 53.1415 21.9165 53.1738 21.9452C53.2061 21.9692 53.2406 22.0073 53.2771 22.0595L53.7818 22.9124C53.525 23.1186 53.2316 23.2726 52.9017 23.3744C52.5717 23.4761 52.2311 23.5238 51.8797 23.5174Z" fill="#010066"></path><path d="M42.9521 17.4882C42.9038 17.5623 42.8537 17.6153 42.8015 17.6471C42.7495 17.6743 42.6836 17.6872 42.604 17.6857C42.5197 17.6842 42.4287 17.6591 42.3312 17.6104C42.2383 17.5619 42.1292 17.5083 42.0037 17.4498C41.8783 17.3866 41.734 17.3301 41.5709 17.2802C41.4125 17.2305 41.2232 17.2036 41.0029 17.1996C40.6609 17.1933 40.3902 17.261 40.1908 17.4027C39.996 17.5444 39.8965 17.7324 39.8923 17.9667C39.8894 18.1213 39.9362 18.2534 40.0327 18.3629C40.1339 18.4679 40.2657 18.5617 40.4283 18.6443C40.5955 18.7271 40.7839 18.8031 40.9935 18.8726C41.2033 18.9373 41.4152 19.0091 41.6294 19.088C41.8482 19.167 42.0621 19.2576 42.2712 19.3599C42.4803 19.4574 42.6655 19.5826 42.8267 19.7356C42.9928 19.8839 43.1231 20.062 43.2177 20.2699C43.317 20.478 43.364 20.7272 43.3587 21.0177C43.3524 21.3644 43.2833 21.6842 43.1514 21.9771C43.0243 22.2653 42.837 22.515 42.5894 22.7261C42.342 22.9325 42.0367 23.0933 41.6737 23.2085C41.3155 23.3192 40.9022 23.3702 40.4336 23.3617C40.1853 23.3571 39.9421 23.3293 39.704 23.2781C39.4705 23.2316 39.2444 23.1666 39.0257 23.0829C38.8116 22.9993 38.6118 22.902 38.4264 22.7908C38.2456 22.6797 38.0861 22.5596 37.9479 22.4305L38.3605 21.7772C38.4135 21.6985 38.4755 21.6387 38.5466 21.5978C38.6176 21.557 38.707 21.5375 38.8148 21.5395C38.9225 21.5414 39.0227 21.5737 39.1153 21.6363C39.2126 21.699 39.3238 21.7667 39.4491 21.8393C39.5743 21.9118 39.7207 21.9801 39.8882 22.0441C40.0605 22.1082 40.2778 22.1426 40.5401 22.1474C40.7463 22.1511 40.9224 22.1309 41.0685 22.0867C41.2194 22.0379 41.3424 21.9745 41.4375 21.8966C41.5374 21.8187 41.6093 21.7287 41.6534 21.6264C41.7022 21.5195 41.7276 21.4098 41.7297 21.2973C41.7328 21.1287 41.6837 20.9895 41.5826 20.8799C41.4862 20.7703 41.3544 20.6742 41.1872 20.5915C41.0246 20.5088 40.8362 20.4351 40.6218 20.3702C40.4121 20.3008 40.1955 20.2266 39.972 20.1475C39.7532 20.0685 39.5369 19.9779 39.3232 19.8756C39.1142 19.7686 38.9268 19.6363 38.761 19.4786C38.5998 19.321 38.4697 19.1289 38.3708 18.9021C38.2765 18.6754 38.2322 18.4028 38.238 18.0842C38.2434 17.789 38.3071 17.509 38.4291 17.244C38.5511 16.9791 38.7263 16.7503 38.9548 16.5576C39.1881 16.3604 39.4744 16.2062 39.8139 16.0953C40.1581 15.9797 40.5528 15.9259 40.9979 15.9341C41.4945 15.9431 41.9452 16.0333 42.3498 16.2048C42.7544 16.3762 43.0902 16.5979 43.357 16.8699L42.9521 17.4882Z" fill="#010066"></path><path d="M33.744 23.2231C33.1162 23.2117 32.6368 23.0272 32.3059 22.6696C31.9798 22.3075 31.8224 21.8149 31.8337 21.1917L31.9071 17.1648L31.1692 17.1513C31.0755 17.1496 30.9964 17.1177 30.9319 17.0556C30.8675 16.9935 30.8363 16.9016 30.8385 16.7797L30.8511 16.091L32.0142 15.9224L32.4155 13.9613C32.4406 13.868 32.4864 13.7962 32.553 13.7458C32.6195 13.6955 32.7043 13.6713 32.8074 13.6732L33.7069 13.6896L33.6656 15.9595L35.5912 15.9946L35.5686 17.2315L33.643 17.1964L33.5718 21.1039C33.5677 21.3288 33.6183 21.5055 33.7238 21.6339C33.8339 21.7625 33.9851 21.8285 34.1772 21.832C34.2849 21.834 34.3741 21.8239 34.4448 21.8017C34.5203 21.775 34.5841 21.748 34.6361 21.7209C34.6929 21.6938 34.7425 21.6689 34.7851 21.6462C34.8278 21.6189 34.8702 21.6056 34.9124 21.6064C34.9639 21.6073 35.0058 21.6222 35.0381 21.6509C35.0705 21.6749 35.105 21.713 35.1415 21.7652L35.6462 22.618C35.3893 22.8243 35.0959 22.9783 34.766 23.0801C34.4361 23.1818 34.0954 23.2295 33.744 23.2231Z" fill="#010066"></path><path d="M28.2075 18.5738C28.2116 18.3489 28.1826 18.1374 28.1206 17.9395C28.0634 17.7369 27.9729 17.5595 27.8491 17.4073C27.7254 17.255 27.5659 17.1349 27.3706 17.047C27.1801 16.9545 26.9561 16.9059 26.6984 16.9012C26.1971 16.8921 25.7986 17.0277 25.5029 17.3082C25.2119 17.5888 25.0217 17.9908 24.9325 18.5141L28.2075 18.5738ZM24.8783 19.5606C24.8997 19.9312 24.9594 20.2533 25.0575 20.527C25.1557 20.7959 25.2875 21.0209 25.453 21.202C25.6185 21.3785 25.8152 21.5133 26.0432 21.6065C26.2759 21.6951 26.5328 21.742 26.8139 21.7471C27.095 21.7522 27.3369 21.7238 27.5396 21.6619C27.7469 21.6 27.9263 21.5307 28.0777 21.4538C28.2337 21.3769 28.3686 21.3067 28.4822 21.2432C28.6005 21.1797 28.7136 21.149 28.8213 21.151C28.9666 21.1536 29.0734 21.2095 29.1417 21.3185L29.6291 21.9601C29.4329 22.1815 29.2139 22.3673 28.9722 22.5176C28.7305 22.6631 28.4776 22.7804 28.2135 22.8693C27.9542 22.9536 27.6884 23.012 27.4159 23.0446C27.1482 23.0772 26.8878 23.0912 26.6348 23.0866C26.1335 23.0774 25.6688 22.9869 25.2408 22.8151C24.8128 22.6386 24.4425 22.3858 24.1298 22.0567C23.8172 21.7229 23.5739 21.3154 23.3998 20.8342C23.2259 20.3483 23.1447 19.7891 23.1563 19.1566C23.1652 18.6646 23.2533 18.2046 23.4204 17.7764C23.5877 17.3436 23.8218 16.9706 24.1228 16.6574C24.4285 16.3396 24.7963 16.0909 25.226 15.9112C25.6605 15.7317 26.1471 15.6468 26.6859 15.6566C27.1404 15.6649 27.5584 15.7452 27.9399 15.8974C28.3215 16.0497 28.6479 16.2689 28.9192 16.555C29.1906 16.8365 29.3999 17.1824 29.547 17.5929C29.699 17.9987 29.7702 18.4617 29.7607 18.9817C29.756 19.2441 29.7246 19.4216 29.6667 19.5143C29.6088 19.6023 29.5003 19.6448 29.341 19.6419L24.8783 19.5606Z" fill="#010066"></path><path d="M22.383 21.343L22.3545 22.9031L16.402 22.7946L16.5872 12.6324L18.4777 12.6669L18.3209 21.2689L22.383 21.343Z" fill="#010066"></path><path d="M38.2125 10.8997C38.4064 11.2653 38.5317 11.6442 38.5883 12.0362C38.6451 12.4235 38.6342 12.8054 38.5555 13.1816C38.477 13.5532 38.3313 13.9076 38.1184 14.2447C37.9102 14.5821 37.6382 14.8789 37.3025 15.1352L36.8456 14.8252C36.7684 14.7699 36.7341 14.7026 36.7425 14.6233C36.7558 14.5395 36.787 14.4753 36.836 14.4307C36.9498 14.3047 37.056 14.1431 37.1544 13.946C37.2528 13.7489 37.3216 13.5317 37.361 13.2943C37.4052 13.0524 37.4102 12.797 37.3759 12.528C37.3463 12.2592 37.2581 11.99 37.1113 11.7204C37.0422 11.5952 37.0261 11.4889 37.063 11.4015C37.1 11.3141 37.1708 11.2541 37.2755 11.2215L38.2125 10.8997Z" fill="#010066"></path></svg></a>
+      </header>
+
+    <div id="scroll-container" style="flex:1 1 auto; min-height:0; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; overscroll-behavior-y:contain; margin-bottom:26px;">
+
+      <section style="position:relative; max-width:1280px; margin-inline:auto; padding: clamp(20px,3vw,32px) clamp(30px,5.5vw,80px) clamp(50px,7vw,80px); display:flex; gap:clamp(24px,4vw,56px); flex-wrap:wrap; align-items:flex-start;">
+        <div style="flex:1 1 220px; min-width:200px;">
+          <h2 style="font-family:'Lato',sans-serif; font-weight:900; font-size: clamp(22px,2.4vw,30px); line-height:1.25; color:oklch(0.24 0.17 264); margin:0; letter-spacing:-0.01em;">Clinic System<br/>for Prenatal Care</h2>
+          <div style="width:52px; height:3px; background:oklch(0.24 0.17 264); margin-top:14px;"></div>
+        </div>
+        <p style="flex:2 1 320px; min-width:240px; font-size: 15px; line-height:1.75; color:oklch(0.42 0.03 264); margin:0;">The platform simplifies complex clinical workflows by integrating smart task prioritization, medical record management, and lead tracking into a single intuitive interface.</p>
+        <div class="hero-gallery-wrap" style="flex:1 1 100%; order:4;">
+          <div class="hero-gallery" style="position:relative; width:100%; max-width:700px; margin:0; cursor:pointer;" onclick="heroAreaClick(this)">
+            <div class="hero-frame" style="border-radius:18px; overflow:hidden; border: 1.5px solid oklch(0.32 0.19 264 / 0.35);">
+              <img class="hero-slide" src="https://shellyackerman.figma.site/_assets/v11/ad9fbcb4e1723795f76e5f728772d9b84411bc86.png" alt="Clinic Management System home screen" style="width:100%; display:block;"/>
+              <img class="hero-slide" src="assets/project-1/treatments.png" alt="Treatments list screen" style="width:100%; display:none;"/>
+              <img class="hero-slide" src="assets/project-1/patients.png" alt="My patients list screen" style="width:100%; display:none;"/>
+              <img class="hero-slide" src="assets/project-1/visit-log.png" alt="Visit documentation screen" style="width:100%; display:none;"/>
+            </div>
+            <div id="gallery-hint" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); display:flex; align-items:center; gap:12px; padding:7px 14px; background:oklch(0.42 0.03 264 / 0.85); border-radius:8px; color:#fff; font-size:13px; white-space:nowrap;">
+              <span>Click on the image to view the gallery.</span>
+              <span onclick="event.stopPropagation(); dismissGalleryHint();" style="cursor:pointer; display:flex; align-items:center; justify-content:center;" aria-label="Close">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L10 10M10 1L1 10" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </span>
+            </div>
+            <div class="hero-dots-pill" style="display:flex; align-items:center; gap:8px; justify-content:center; position:absolute; left:50%; bottom:0; transform:translate(-50%, 50%); padding:7px 12px; background:#FDFBF6; border:1.5px solid oklch(0.32 0.19 264 / 0.35); border-radius:999px;">
+              <span class="hero-dot" onclick="event.stopPropagation(); heroGoTo(0)" style="width:8px; height:8px; border-radius:50%; background:oklch(0.24 0.17 264); cursor:pointer;"></span>
+              <span class="hero-dot" onclick="event.stopPropagation(); heroGoTo(1)" style="width:8px; height:8px; border-radius:50%; background:oklch(0.32 0.19 264 / 0.25); cursor:pointer;"></span>
+              <span class="hero-dot" onclick="event.stopPropagation(); heroGoTo(2)" style="width:8px; height:8px; border-radius:50%; background:oklch(0.32 0.19 264 / 0.25); cursor:pointer;"></span>
+              <span class="hero-dot" onclick="event.stopPropagation(); heroGoTo(3)" style="width:8px; height:8px; border-radius:50%; background:oklch(0.32 0.19 264 / 0.25); cursor:pointer;"></span>
+            </div>
+          </div>
+        </div>
+        <div class="project-roles" style="flex:1 1 260px; min-width:240px; order:3;">
+          <h4 class="roles-heading" style="font-family:'Lato',sans-serif; font-weight:700; font-size:14px; color:oklch(0.24 0.17 264); margin:0 0 12px;">My Roles &amp; Responsibilities</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <span style="background:oklch(0.24 0.17 264); color:#fff; font-size:11.5px; font-weight:700; padding:5px 11px;">User Research &amp; Discovery</span>
+            <span style="background:oklch(0.24 0.17 264); color:#fff; font-size:11.5px; font-weight:700; padding:5px 11px;">Information Architecture</span>
+            <span style="background:oklch(0.24 0.17 264); color:#fff; font-size:11.5px; font-weight:700; padding:5px 11px;">User Flow</span>
+            <span style="background:oklch(0.24 0.17 264); color:#fff; font-size:11.5px; font-weight:700; padding:5px 11px;">UX Concept</span>
+            <span style="background:oklch(0.24 0.17 264); color:#fff; font-size:11.5px; font-weight:700; padding:5px 11px;">UI Concept</span>
+            <span style="background:oklch(0.24 0.17 264); color:#fff; font-size:11.5px; font-weight:700; padding:5px 11px;">AI Feature Integration</span>
+          </div>
+        </div>
+      </section>
+
+      <section style="position:relative; max-width:1280px; margin-inline:auto; padding: 0 clamp(30px,5.5vw,80px) clamp(50px,7vw,80px);">
+        <h3 style="font-family:'Lato',sans-serif; font-weight:700; font-size:19px; color:oklch(0.24 0.17 264); margin:0 0 8px;">Overview</h3>
+        <p style="font-size:16px; line-height:1.8; color:oklch(0.42 0.03 264); max-width:760px; margin:0;">SisCare is a clinic management platform built for pregnancy care nurses, centralizing medical and administrative data in one place. By reducing cognitive load and streamlining daily tasks, it frees nurses to focus on what matters most: delivering personalized, high-quality patient care.</p>
+      </section>
+
+      <section style="position:relative; max-width:1280px; margin-inline:auto; padding: 0 clamp(30px,5.5vw,80px) clamp(50px,7vw,80px);">
+        <h3 style="font-family:'Lato',sans-serif; font-weight:700; font-size:19px; color:oklch(0.24 0.17 264); margin:0 0 8px;">Problem</h3>
+        <p style="font-size:16px; line-height:1.8; color:oklch(0.42 0.03 264); max-width:760px; margin:0;">Nurses in this field juggle demanding hospital shifts alongside running their own private clinic, with no single place to track it all. The core challenge was bridging business management and clinical documentation, turning complex, scattered data into a clean, intuitive experience that saves time and prevents costly errors.</p>
+      </section>
+
+      <section style="position:relative; max-width:1280px; margin-inline:auto; padding: 0 clamp(30px,5.5vw,80px) clamp(50px,7vw,80px);">
+        <h3 style="font-family:'Lato',sans-serif; font-weight:700; font-size:19px; color:oklch(0.24 0.17 264); margin:0 0 8px;">Design Process</h3>
+        <p style="font-size:16px; line-height:1.8; color:oklch(0.42 0.03 264); max-width:760px; margin:0 0 32px;">The process began with user research, persona definition, and information architecture mapping. These insights shaped an interface that centralizes urgent tasks and key indicators in one clear view, highlighting the day's schedule and giving staff an instant snapshot of each incoming patient. Every screen was refined to balance rich functionality with everyday simplicity.</p>
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:900px;">
+          <div style="border-radius:0; overflow:hidden; border:1px solid oklch(0.85 0.01 264);"><img src="https://shellyackerman.figma.site/_assets/v11/eda215a4be28231798b75292767cbbc57045df95.png" alt="Design Process screen 1" style="width:100%; display:block;"/></div>
+          <div style="border-radius:0; overflow:hidden; border:1px solid oklch(0.85 0.01 264);"><img src="https://shellyackerman.figma.site/_assets/v11/ab1e23bf17ca93a05935fa621a1a5f3775da50a3.png" alt="Design Process screen 2" style="width:100%; display:block;"/></div>
+          <div style="border-radius:0; overflow:hidden; border:1px solid oklch(0.85 0.01 264);"><img src="https://shellyackerman.figma.site/_assets/v11/a5d3d062322a3ed47ad82ecd329e529d009a3bdd.png" alt="Design Process screen 3" style="width:100%; display:block;"/></div>
+          <div style="border-radius:0; overflow:hidden; border:1px solid oklch(0.85 0.01 264);"><img src="https://shellyackerman.figma.site/_assets/v11/13bfa3de5b215c3b8cbe4131a57727a2e61c22d0.png" alt="Design Process screen 4" style="width:100%; display:block;"/></div>
+          <div style="border-radius:0; overflow:hidden; border:1px solid oklch(0.85 0.01 264);"><img src="https://shellyackerman.figma.site/_assets/v11/b39e5bd300290ac0d8f0ff9f68e8cd9db0bb5ea0.png" alt="Design Process screen 5" style="width:100%; display:block;"/></div>
+          <div style="border-radius:0; overflow:hidden; border:1px solid oklch(0.85 0.01 264);"><img src="https://shellyackerman.figma.site/_assets/v11/d33f6483bae37bbb8c6dfb587e64199d4b8f4b62.png" alt="Design Process screen 6" style="width:100%; display:block;"/></div>
+        </div>
+      </section>
+
+    </div>
+    <div class="project-nav-footer" style="display:none; align-items:center; justify-content:center; gap:10px; position:fixed; left:0; right:0; bottom:0; padding:14px 20px calc(14px + env(safe-area-inset-bottom)); background:linear-gradient(rgba(253,251,246,0.6), rgba(253,251,246,0.94)); backdrop-filter:blur(8px); border-top:1px solid oklch(0.32 0.19 264 / 0.35); font-size:14px; color:oklch(0.42 0.03 264); z-index:20;">
+      <span id="nav-indicator" style="position:absolute; width:30px; height:30px; border-radius:50%; background:oklch(0.24 0.17 264); opacity:0; pointer-events:none;"></span>
+      <a href="project-1.html" aria-label="Project 1" aria-current="page" style="position:relative; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-weight:700; font-size:14px; color:#FFFFFF;">1</a>
+      <a href="project-2.html" aria-label="Project 2" style="position:relative; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-weight:400; font-size:14px; color:oklch(0.42 0.03 264);">2</a>
+      <a href="project-3.html" aria-label="Project 3" style="position:relative; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-weight:400; font-size:14px; color:oklch(0.42 0.03 264);">3</a>
+      <a href="project-4.html" aria-label="Project 4" style="position:relative; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-weight:400; font-size:14px; color:oklch(0.42 0.03 264);">4</a>
+      <a href="project-5.html" aria-label="Project 5" style="position:relative; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-weight:400; font-size:14px; color:oklch(0.42 0.03 264);">5</a>
+    </div>
+  </div>
+</div>
+
+<script>
+var heroIndex = 0;
+function dismissGalleryHint() {
+  sessionStorage.setItem('galleryHintDismissed', '1');
+  var hint = document.getElementById('gallery-hint');
+  if (hint) hint.remove();
+}
+if (sessionStorage.getItem('galleryHintDismissed') === '1') {
+  var _hint = document.getElementById('gallery-hint');
+  if (_hint) _hint.remove();
+}
+function heroShow(step) {
+  var slides = document.querySelectorAll('.hero-slide');
+  var dots = document.querySelectorAll('.hero-dot');
+  heroIndex = (heroIndex + step + slides.length) % slides.length;
+  slides.forEach(function(s, idx){ s.style.display = idx === heroIndex ? 'block' : 'none'; });
+  dots.forEach(function(d, idx){ d.style.background = idx === heroIndex ? 'oklch(0.24 0.17 264)' : 'oklch(0.32 0.19 264 / 0.25)'; });
+}
+function heroGoTo(i) { heroShow(i - heroIndex); }
+function centerHeroImage(el) {
+  var container = document.getElementById('scroll-container');
+  var cRect = container.getBoundingClientRect();
+  var eRect = el.getBoundingClientRect();
+  var target = container.scrollTop + (eRect.top - cRect.top) - (cRect.height / 2 - eRect.height / 2);
+  var max = container.scrollHeight - container.clientHeight;
+  target = Math.max(0, Math.min(target, max));
+  return { target: target, isCentered: Math.abs(container.scrollTop - target) <= 2 };
+}
+function heroAreaClick(el) {
+  if (window.innerWidth <= 640) return;
+  var container = document.getElementById('scroll-container');
+  var state = centerHeroImage(el);
+  if (!state.isCentered) {
+    smoothScrollTo(container, state.target, 450);
+  } else {
+    heroAdvance();
+  }
+}
+function heroAdvance() {
+  heroShow(1);
+}
+function smoothScrollTo(container, target, duration) {
+  var start = container.scrollTop;
+  var change = target - start;
+  var startTime = performance.now();
+  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  function step(now) {
+    var t = Math.min((now - startTime) / duration, 1);
+    container.scrollTop = start + change * ease(t);
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+(function() {
+  var wrapper = document.querySelector('[onclick="heroAreaClick(this)"]');
+  if (!wrapper) return;
+  var frame = wrapper.querySelector('div');
+  var slides = frame.querySelectorAll('.hero-slide');
+  var origWrapperStyle = wrapper.getAttribute('style');
+  var origFrameStyle = frame.getAttribute('style');
+  var origSlideStyles = Array.prototype.map.call(slides, function(s){ return s.getAttribute('style'); });
+
+  function sizeGalleryToViewport() {
+    wrapper.setAttribute('style', origWrapperStyle);
+    frame.setAttribute('style', origFrameStyle);
+    slides.forEach(function(s, i){ s.setAttribute('style', origSlideStyles[i]); });
+
+    if (window.innerWidth < 768) return;
+
+    var scrollContainer = document.getElementById('scroll-container');
+    var dotsPill = document.querySelector('.hero-dot').parentElement;
+    var refImg = slides[0];
+
+    var availableHeight = scrollContainer.clientHeight;
+    var dotsOverflow = dotsPill.getBoundingClientRect().height / 2 + 12;
+    var targetHeight = Math.max(availableHeight - dotsOverflow, 200);
+
+    var ratio = (refImg.naturalWidth && refImg.naturalHeight)
+      ? refImg.naturalWidth / refImg.naturalHeight
+      : (wrapper.getBoundingClientRect().width / frame.getBoundingClientRect().height);
+    var targetWidth = targetHeight * ratio;
+
+    var section = wrapper.parentElement;
+    var sectionStyle = getComputedStyle(section);
+    var maxAvailWidth = section.clientWidth - parseFloat(sectionStyle.paddingLeft) - parseFloat(sectionStyle.paddingRight);
+    if (targetWidth > maxAvailWidth) {
+      targetWidth = maxAvailWidth;
+      targetHeight = targetWidth / ratio;
+    }
+
+    wrapper.style.width = targetWidth + 'px';
+    wrapper.style.maxWidth = 'none';
+    frame.style.height = targetHeight + 'px';
+    frame.style.removeProperty('aspect-ratio');
+    frame.style.background = '#FDFBF6';
+    slides.forEach(function(s){
+      s.style.width = '100%';
+      s.style.height = '100%';
+      s.style.objectFit = 'contain';
+    });
+  }
+
+  window.addEventListener('load', sizeGalleryToViewport);
+  window.addEventListener('resize', sizeGalleryToViewport);
+})();
+
+(function () {
+  var footer = document.querySelector('.project-nav-footer');
+  var indicator = document.getElementById('nav-indicator');
+  if (!footer || !indicator) return;
+  var links = Array.prototype.slice.call(footer.querySelectorAll('a[href]'));
+  var activeIndex = -1;
+  links.forEach(function (l, i) { if (l.getAttribute('aria-current') === 'page') activeIndex = i; });
+
+  function placeIndicator(index, animate) {
+    var link = links[index];
+    if (!link) return;
+    var linkRect = link.getBoundingClientRect();
+    var footerRect = footer.getBoundingClientRect();
+    indicator.style.transition = animate ? 'left 0.35s cubic-bezier(.65,0,.35,1), top 0.35s cubic-bezier(.65,0,.35,1)' : 'none';
+    indicator.style.left = (linkRect.left - footerRect.left) + 'px';
+    indicator.style.top = (linkRect.top - footerRect.top) + 'px';
+  }
+
+  var hashMatch = /(?:^|[?#&])from=(\d+)/.exec(location.hash || location.search);
+  var fromIndex = hashMatch ? parseInt(hashMatch[1], 10) : NaN;
+
+  if (!isNaN(fromIndex) && window.matchMedia('(max-width: 640px)').matches) {
+    placeIndicator(fromIndex, false);
+    indicator.style.opacity = '1';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        placeIndicator(activeIndex, true);
+      });
+    });
+  } else {
+    placeIndicator(activeIndex, false);
+    indicator.style.opacity = '1';
+  }
+
+  if (history.replaceState && (location.hash || location.search)) {
+    history.replaceState(null, '', location.pathname);
+  }
+
+  window.addEventListener('resize', function () { placeIndicator(activeIndex, false); });
+
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      if (!window.matchMedia('(max-width: 640px)').matches) return;
+      e.preventDefault();
+      var target = link.getAttribute('href').split('#')[0].split('?')[0];
+      window.location.href = target + '#from=' + activeIndex;
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
