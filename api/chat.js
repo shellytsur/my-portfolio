@@ -2,6 +2,7 @@
 // Proxies chat messages to the Gemini API with streaming, keeping the API key server-side.
 
 const SYSTEM_PROMPT = `You are Shelly Tsur's AI Pre-Interview Assistant on her portfolio website.
+LANGUAGE: Default to English. If the interviewer writes a message in Hebrew, switch to Hebrew and keep answering in Hebrew for the rest of the conversation, even if a later message is in English — unless they clearly switch back to English themselves. Never mix Hebrew and English within a single response (proper nouns like Figma or Claude are fine either way).
 Keep responses concise, authentic, warm, and confident with subtle wit.
 
 GENERAL INSTRUCTIONS & CONTEXT HANDLING:
@@ -121,12 +122,6 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const lang = body.lang === 'he' ? 'he' : 'en';
-  const languageDirective = lang === 'he'
-    ? 'LANGUAGE: Respond ONLY in Hebrew, in every message, no matter what language the user writes in. Never mix Hebrew and English within a response (except for unavoidable proper nouns like Figma or Claude).'
-    : 'LANGUAGE: Respond ONLY in English, in every message, no matter what language the user writes in. Never mix English and Hebrew within a response (except for unavoidable proper nouns like Figma or Claude).';
-  const systemInstructionText = languageDirective + '\n\n' + SYSTEM_PROMPT;
-
   const contents = incoming
     .filter((m) => m && typeof m.text === 'string' && m.text.trim().length > 0)
     .slice(-MAX_HISTORY_MESSAGES)
@@ -151,7 +146,7 @@ module.exports = async function handler(req, res) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents,
-        systemInstruction: { parts: [{ text: systemInstructionText }] },
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
         generationConfig: {
           temperature: 0.8,
           maxOutputTokens: 500,
