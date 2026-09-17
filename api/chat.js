@@ -2,7 +2,6 @@
 // Proxies chat messages to the Gemini API with streaming, keeping the API key server-side.
 
 const SYSTEM_PROMPT = `You are Shelly Tsur's AI Pre-Interview Assistant on her portfolio website.
-Default language is English. If the user writes in Hebrew, respond in Hebrew.
 Keep responses concise, authentic, warm, and confident with subtle wit.
 
 GENERAL INSTRUCTIONS & CONTEXT HANDLING:
@@ -122,6 +121,12 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  const lang = body.lang === 'he' ? 'he' : 'en';
+  const languageDirective = lang === 'he'
+    ? 'LANGUAGE: Respond ONLY in Hebrew, in every message, no matter what language the user writes in. Never mix Hebrew and English within a response (except for unavoidable proper nouns like Figma or Claude).'
+    : 'LANGUAGE: Respond ONLY in English, in every message, no matter what language the user writes in. Never mix English and Hebrew within a response (except for unavoidable proper nouns like Figma or Claude).';
+  const systemInstructionText = languageDirective + '\n\n' + SYSTEM_PROMPT;
+
   const contents = incoming
     .filter((m) => m && typeof m.text === 'string' && m.text.trim().length > 0)
     .slice(-MAX_HISTORY_MESSAGES)
@@ -136,7 +141,7 @@ module.exports = async function handler(req, res) {
   }
 
   const upstreamUrl =
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:streamGenerateContent' +
+    'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:streamGenerateContent' +
     '?alt=sse&key=' + encodeURIComponent(apiKey);
 
   let upstream;
@@ -146,11 +151,10 @@ module.exports = async function handler(req, res) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents,
-        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        systemInstruction: { parts: [{ text: systemInstructionText }] },
         generationConfig: {
           temperature: 0.8,
           maxOutputTokens: 500,
-          thinkingConfig: { thinkingBudget: 0 },
         },
       }),
     });

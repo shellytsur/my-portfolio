@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <title>Interview Shelly — AI Pre-Interview Assistant</title>
@@ -40,6 +40,16 @@
     display: flex; flex-direction: column; gap: 18px;
   }
 
+  .lang-toggle {
+    display: flex; justify-content: center; gap: 6px; margin: 4px 0 -6px;
+  }
+  .lang-btn {
+    border: 1.5px solid var(--border); background: #fff; color: var(--ink-soft);
+    border-radius: 20px; padding: 6px 16px; font-size: 13px; font-weight: 700; cursor: pointer;
+    font-family: inherit; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .lang-btn.active { border-color: var(--ink); background: var(--ink); color: #fff; }
+
   .intro { text-align: center; padding: 20px 10px 6px; }
   .intro h1 { font-size: clamp(22px, 3vw, 30px); margin: 0 0 8px; }
   .intro p { color: var(--ink-soft); font-size: 15px; margin: 0; line-height: 1.5; }
@@ -61,9 +71,10 @@
   .bubble {
     max-width: 78%; padding: 13px 17px; border-radius: 16px;
     font-size: 15px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word;
+    text-align: start;
   }
-  .msg-user .bubble { background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
-  .msg-assistant .bubble { background: var(--card); color: var(--ink); border-bottom-left-radius: 4px; }
+  .msg-user .bubble { background: var(--ink); color: #fff; border-end-end-radius: 4px; }
+  .msg-assistant .bubble { background: var(--card); color: var(--ink); border-end-start-radius: 4px; }
   .bubble.error { background: #FBEAEA; color: #8A2E2E; }
 
   .bubble.typing::after {
@@ -86,15 +97,16 @@
   #chat-input {
     flex: 1; border: none; outline: none; resize: none; font-family: inherit;
     font-size: 15px; line-height: 1.5; max-height: 120px; padding: 8px 0; color: var(--ink);
-    background: transparent;
+    background: transparent; text-align: start;
   }
   #chat-input::placeholder { color: #A8A6B8; }
   #send-btn {
     flex: none; width: 42px; height: 42px; border-radius: 50%; border: none;
     background: var(--ink); color: #fff; cursor: pointer; font-size: 17px;
     display: flex; align-items: center; justify-content: center;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease; transform: scaleX(1);
   }
+  html[dir="rtl"] #send-btn { transform: scaleX(-1); }
   #send-btn:disabled { opacity: 0.4; cursor: default; }
 
   .disclaimer { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
@@ -107,26 +119,26 @@
 <body>
 
 <header>
-  <a href="index.html" class="back-link">&larr; Portfolio</a>
+  <a href="index.html" class="back-link" id="back-link">&larr; Portfolio</a>
   <a href="index.html" class="brand">
     <div>
       <div class="brand-name">Shelly Tsur Ackerman</div>
-      <div class="brand-role">Product Designer</div>
+      <div class="brand-role" id="brand-role">Product Designer</div>
     </div>
   </a>
 </header>
 
 <main>
+  <div class="lang-toggle">
+    <button type="button" class="lang-btn" data-lang="en">English</button>
+    <button type="button" class="lang-btn" data-lang="he">עברית</button>
+  </div>
+
   <div class="intro">
-    <h1>🤖 Interview Me</h1>
-    <p>Ask me anything you'd ask in a real pre-interview — background, strengths, tools, availability.<br>
-    Answers come from Shelly herself. Write in Hebrew or English, whatever feels natural.</p>
-    <div class="chips" id="chips">
-      <button type="button" class="chip">Tell me about your background</button>
-      <button type="button" class="chip">What are your strengths and weaknesses?</button>
-      <button type="button" class="chip">What's your tech stack?</button>
-      <button type="button" class="chip">מה את מחפשת בעבודה הבאה?</button>
-    </div>
+    <h1 id="intro-heading">🤖 Interview Me</h1>
+    <p id="intro-text">Ask me anything you'd ask in a real pre-interview — background, strengths, tools, availability.<br>
+    Answers come from Shelly herself.</p>
+    <div class="chips" id="chips"></div>
   </div>
 
   <div id="chat-log"></div>
@@ -134,19 +146,106 @@
 
 <form id="chat-form">
   <div class="input-row">
-    <textarea id="chat-input" rows="1" placeholder="Ask a question... / שאלי כל שאלה" dir="auto"></textarea>
+    <textarea id="chat-input" rows="1"></textarea>
     <button id="send-btn" type="submit" aria-label="Send">➤</button>
   </div>
-  <div class="disclaimer">AI-generated answers based on Shelly's real experience — not a substitute for talking to her directly.</div>
+  <div class="disclaimer" id="disclaimer">AI-generated answers based on Shelly's real experience — not a substitute for talking to her directly.</div>
 </form>
 
 <script>
+  const TRANSLATIONS = {
+    en: {
+      dir: 'ltr',
+      pageTitle: 'Interview Shelly — AI Pre-Interview Assistant',
+      brandRole: 'Product Designer',
+      backLink: '← Portfolio',
+      heading: '🤖 Interview Me',
+      intro: "Ask me anything you'd ask in a real pre-interview — background, strengths, tools, availability.<br>Answers come from Shelly herself.",
+      chips: [
+        'Tell me about your background',
+        'What are your strengths and weaknesses?',
+        "What's your tech stack?",
+        'What are you looking for in your next role?',
+      ],
+      placeholder: 'Ask a question...',
+      disclaimer: "AI-generated answers based on Shelly's real experience — not a substitute for talking to her directly.",
+      genericError: 'Something went wrong. Please try again in a moment.',
+      rateLimitError: 'Too many messages — please slow down a bit.',
+      emptyReply: "Hmm, I didn't catch that — mind trying again?",
+    },
+    he: {
+      dir: 'rtl',
+      pageTitle: 'ראיינו אותי — עוזרת AI לפני-ראיון',
+      brandRole: 'מעצבת מוצר',
+      backLink: '→ פורטפוליו',
+      heading: '🤖 ראיינו אותי',
+      intro: 'שאלו אותי כל מה שהייתם שואלים בראיון אמיתי — רקע, חוזקות, כלים, זמינות.<br>התשובות מגיעות ישירות משלי.',
+      chips: [
+        'ספרי לי על הרקע שלך',
+        'מה החוזקות והחולשות שלך?',
+        'מה הכלים שאת עובדת איתם?',
+        'מה את מחפשת בתפקיד הבא?',
+      ],
+      placeholder: 'שאלי כל שאלה...',
+      disclaimer: 'התשובות נוצרות ע"י AI על בסיס הניסיון האמיתי של שלי — לא תחליף לשיחה איתה ישירות.',
+      genericError: 'משהו השתבש. נסו שוב בעוד רגע.',
+      rateLimitError: 'יותר מדי הודעות — קצת לאט לאט :)',
+      emptyReply: 'הממ, לא הצלחתי לתפוס את זה — אפשר לנסות שוב?',
+    },
+  };
+
+  let currentLang = 'en';
   const messages = [];
   const chatLog = document.getElementById('chat-log');
   const form = document.getElementById('chat-form');
   const input = document.getElementById('chat-input');
   const sendBtn = document.getElementById('send-btn');
   const chips = document.getElementById('chips');
+  const introHeading = document.getElementById('intro-heading');
+  const introText = document.getElementById('intro-text');
+  const disclaimer = document.getElementById('disclaimer');
+  const backLink = document.getElementById('back-link');
+  const brandRole = document.getElementById('brand-role');
+  let chatStarted = false;
+
+  function renderChips() {
+    const t = TRANSLATIONS[currentLang];
+    chips.innerHTML = '';
+    t.chips.forEach((label) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'chip';
+      btn.textContent = label;
+      btn.addEventListener('click', () => sendMessage(label));
+      chips.appendChild(btn);
+    });
+    chips.style.display = chatStarted ? 'none' : 'flex';
+  }
+
+  function applyLanguage(lang) {
+    currentLang = lang;
+    const t = TRANSLATIONS[lang];
+    document.documentElement.lang = lang;
+    document.documentElement.dir = t.dir;
+    document.title = t.pageTitle;
+    introHeading.textContent = t.heading;
+    introText.innerHTML = t.intro;
+    input.placeholder = t.placeholder;
+    disclaimer.textContent = t.disclaimer;
+    backLink.textContent = t.backLink;
+    brandRole.textContent = t.brandRole;
+    renderChips();
+
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+  }
+
+  document.querySelectorAll('.lang-btn').forEach((btn) => {
+    btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+  });
+
+  applyLanguage('en');
 
   function autoGrow() {
     input.style.height = 'auto';
@@ -159,7 +258,6 @@
     wrap.className = 'msg msg-' + role;
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    bubble.dir = 'auto';
     bubble.textContent = text;
     wrap.appendChild(bubble);
     chatLog.appendChild(wrap);
@@ -171,7 +269,8 @@
     const trimmed = text.trim();
     if (!trimmed || sendBtn.disabled) return;
 
-    if (chips.parentElement) chips.style.display = 'none';
+    chatStarted = true;
+    chips.style.display = 'none';
 
     input.value = '';
     autoGrow();
@@ -182,19 +281,20 @@
 
     const assistantBubble = addMessage('assistant', '');
     assistantBubble.classList.add('typing');
+    const t = TRANSLATIONS[currentLang];
 
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages }),
+        body: JSON.stringify({ messages, lang: currentLang }),
       });
 
       if (!res.ok || !res.body) {
-        let errMsg = 'Something went wrong. Please try again in a moment.';
+        let errMsg = t.genericError;
         try {
           const errJson = await res.json();
-          if (res.status === 429) errMsg = errJson.error || 'Too many messages — please slow down a bit.';
+          if (res.status === 429) errMsg = errJson.error || t.rateLimitError;
         } catch (_) {}
         throw new Error(errMsg);
       }
@@ -213,13 +313,13 @@
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       }
 
-      if (!full) full = "Hmm, I didn't catch that — mind trying again?";
+      if (!full) full = t.emptyReply;
       assistantBubble.textContent = full;
       messages.push({ role: 'assistant', text: full });
     } catch (err) {
       assistantBubble.classList.remove('typing');
       assistantBubble.classList.add('error');
-      assistantBubble.textContent = err.message || 'Something went wrong. Please try again.';
+      assistantBubble.textContent = err.message || t.genericError;
       messages.pop();
     } finally {
       sendBtn.disabled = false;
@@ -237,10 +337,6 @@
       e.preventDefault();
       sendMessage(input.value);
     }
-  });
-
-  chips.querySelectorAll('.chip').forEach((chip) => {
-    chip.addEventListener('click', () => sendMessage(chip.textContent));
   });
 </script>
 
