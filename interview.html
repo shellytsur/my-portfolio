@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Interview Shelly — AI Pre-Interview Assistant</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: oklch(0.24 0.17 264);
+    --ink-soft: #4D4C6D;
+    --bg: #FDFBF6;
+    --card: #F5F4F2;
+    --border: #E4E1D8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); font-family: 'Lato', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px clamp(20px, 5vw, 60px);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand-name { font-weight: 700; font-size: 15px; color: var(--ink); }
+  .brand-role { font-size: 12px; color: var(--ink-soft); }
+  .back-link {
+    font-size: 14px; font-weight: 700; color: var(--ink); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  main {
+    max-width: 760px; margin: 0 auto;
+    padding: clamp(20px, 4vw, 40px) clamp(16px, 5vw, 24px) 140px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+
+  .intro { text-align: center; padding: 20px 10px 6px; }
+  .intro h1 { font-size: clamp(22px, 3vw, 30px); margin: 0 0 8px; }
+  .intro p { color: var(--ink-soft); font-size: 15px; margin: 0; line-height: 1.5; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+  .chip {
+    border: 1.5px solid var(--border); background: #fff; color: var(--ink);
+    border-radius: 20px; padding: 9px 16px; font-size: 13.5px; cursor: pointer;
+    font-family: inherit; transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .chip:hover { border-color: var(--ink); background: var(--card); }
+
+  #chat-log { display: flex; flex-direction: column; gap: 14px; }
+
+  .msg { display: flex; }
+  .msg-user { justify-content: flex-end; }
+  .msg-assistant { justify-content: flex-start; }
+
+  .bubble {
+    max-width: 78%; padding: 13px 17px; border-radius: 16px;
+    font-size: 15px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word;
+  }
+  .msg-user .bubble { background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
+  .msg-assistant .bubble { background: var(--card); color: var(--ink); border-bottom-left-radius: 4px; }
+  .bubble.error { background: #FBEAEA; color: #8A2E2E; }
+
+  .bubble.typing::after {
+    content: "●●●"; display: inline-block; letter-spacing: 2px;
+    animation: pulse 1.2s infinite ease-in-out; color: var(--ink-soft); font-size: 12px;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+  form#chat-form {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, var(--bg) 60%, transparent);
+    padding: 24px clamp(16px, 5vw, 24px) 22px;
+  }
+  .input-row {
+    max-width: 760px; margin: 0 auto;
+    display: flex; align-items: flex-end; gap: 10px;
+    background: #fff; border: 1.5px solid var(--border); border-radius: 20px;
+    padding: 8px 8px 8px 18px;
+  }
+  #chat-input {
+    flex: 1; border: none; outline: none; resize: none; font-family: inherit;
+    font-size: 15px; line-height: 1.5; max-height: 120px; padding: 8px 0; color: var(--ink);
+    background: transparent;
+  }
+  #chat-input::placeholder { color: #A8A6B8; }
+  #send-btn {
+    flex: none; width: 42px; height: 42px; border-radius: 50%; border: none;
+    background: var(--ink); color: #fff; cursor: pointer; font-size: 17px;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s ease;
+  }
+  #send-btn:disabled { opacity: 0.4; cursor: default; }
+
+  .disclaimer { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
+
+  @media (max-width: 640px) {
+    .bubble { max-width: 88%; font-size: 14.5px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="back-link">&larr; Portfolio</a>
+  <a href="index.html" class="brand">
+    <div>
+      <div class="brand-name">Shelly Tsur Ackerman</div>
+      <div class="brand-role">Product Designer</div>
+    </div>
+  </a>
+</header>
+
+<main>
+  <div class="intro">
+    <h1>🤖 Interview Me</h1>
+    <p>Ask me anything you'd ask in a real pre-interview — background, strengths, tools, availability.<br>
+    Answers come from Shelly herself. Write in Hebrew or English, whatever feels natural.</p>
+    <div class="chips" id="chips">
+      <button type="button" class="chip">Tell me about your background</button>
+      <button type="button" class="chip">What are your strengths and weaknesses?</button>
+      <button type="button" class="chip">What's your tech stack?</button>
+      <button type="button" class="chip">מה את מחפשת בעבודה הבאה?</button>
+    </div>
+  </div>
+
+  <div id="chat-log"></div>
+</main>
+
+<form id="chat-form">
+  <div class="input-row">
+    <textarea id="chat-input" rows="1" placeholder="Ask a question... / שאלי כל שאלה" dir="auto"></textarea>
+    <button id="send-btn" type="submit" aria-label="Send">➤</button>
+  </div>
+  <div class="disclaimer">AI-generated answers based on Shelly's real experience — not a substitute for talking to her directly.</div>
+</form>
+
+<script>
+  const messages = [];
+  const chatLog = document.getElementById('chat-log');
+  const form = document.getElementById('chat-form');
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const chips = document.getElementById('chips');
+
+  function autoGrow() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+  }
+  input.addEventListener('input', autoGrow);
+
+  function addMessage(role, text) {
+    const wrap = document.createElement('div');
+    wrap.className = 'msg msg-' + role;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.dir = 'auto';
+    bubble.textContent = text;
+    wrap.appendChild(bubble);
+    chatLog.appendChild(wrap);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    return bubble;
+  }
+
+  async function sendMessage(text) {
+    const trimmed = text.trim();
+    if (!trimmed || sendBtn.disabled) return;
+
+    if (chips.parentElement) chips.style.display = 'none';
+
+    input.value = '';
+    autoGrow();
+    sendBtn.disabled = true;
+
+    messages.push({ role: 'user', text: trimmed });
+    addMessage('user', trimmed);
+
+    const assistantBubble = addMessage('assistant', '');
+    assistantBubble.classList.add('typing');
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages }),
+      });
+
+      if (!res.ok || !res.body) {
+        let errMsg = 'Something went wrong. Please try again in a moment.';
+        try {
+          const errJson = await res.json();
+          if (res.status === 429) errMsg = errJson.error || 'Too many messages — please slow down a bit.';
+        } catch (_) {}
+        throw new Error(errMsg);
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let full = '';
+      let first = true;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (first) { assistantBubble.classList.remove('typing'); first = false; }
+        full += decoder.decode(value, { stream: true });
+        assistantBubble.textContent = full;
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+
+      if (!full) full = "Hmm, I didn't catch that — mind trying again?";
+      assistantBubble.textContent = full;
+      messages.push({ role: 'assistant', text: full });
+    } catch (err) {
+      assistantBubble.classList.remove('typing');
+      assistantBubble.classList.add('error');
+      assistantBubble.textContent = err.message || 'Something went wrong. Please try again.';
+      messages.pop();
+    } finally {
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    sendMessage(input.value);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input.value);
+    }
+  });
+
+  chips.querySelectorAll('.chip').forEach((chip) => {
+    chip.addEventListener('click', () => sendMessage(chip.textContent));
+  });
+</script>
+
+</body>
+</html>
